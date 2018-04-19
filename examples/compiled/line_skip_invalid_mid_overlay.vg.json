@@ -28,7 +28,7 @@
                 },
                 {
                     "x": 5,
-                    "y": 30
+                    "y": null
                 },
                 {
                     "x": 6,
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "name": "data_0",
+            "name": "data_1",
             "source": "source_0",
             "transform": [
                 {
@@ -55,11 +55,31 @@
                     "as": "y"
                 }
             ]
+        },
+        {
+            "name": "data_2",
+            "source": "source_0",
+            "transform": [
+                {
+                    "type": "formula",
+                    "expr": "toNumber(datum[\"x\"])",
+                    "as": "x"
+                },
+                {
+                    "type": "formula",
+                    "expr": "toNumber(datum[\"y\"])",
+                    "as": "y"
+                },
+                {
+                    "type": "filter",
+                    "expr": "datum[\"x\"] !== null && !isNaN(datum[\"x\"]) && datum[\"y\"] !== null && !isNaN(datum[\"y\"])"
+                }
+            ]
         }
     ],
     "marks": [
         {
-            "name": "marks",
+            "name": "layer_0_marks",
             "type": "line",
             "style": [
                 "line"
@@ -69,7 +89,7 @@
                 "order": "descending"
             },
             "from": {
-                "data": "data_0"
+                "data": "data_1"
             },
             "encode": {
                 "update": {
@@ -89,6 +109,34 @@
                     }
                 }
             }
+        },
+        {
+            "name": "layer_1_marks",
+            "type": "symbol",
+            "style": [
+                "point"
+            ],
+            "from": {
+                "data": "data_2"
+            },
+            "encode": {
+                "update": {
+                    "opacity": {
+                        "value": 0.7
+                    },
+                    "fill": {
+                        "value": "#4c78a8"
+                    },
+                    "x": {
+                        "scale": "x",
+                        "field": "x"
+                    },
+                    "y": {
+                        "scale": "y",
+                        "field": "y"
+                    }
+                }
+            }
         }
     ],
     "scales": [
@@ -96,8 +144,16 @@
             "name": "x",
             "type": "linear",
             "domain": {
-                "data": "data_0",
-                "field": "x"
+                "fields": [
+                    {
+                        "data": "data_1",
+                        "field": "x"
+                    },
+                    {
+                        "data": "data_2",
+                        "field": "x"
+                    }
+                ]
             },
             "range": [
                 0,
@@ -112,8 +168,16 @@
             "name": "y",
             "type": "linear",
             "domain": {
-                "data": "data_0",
-                "field": "y"
+                "fields": [
+                    {
+                        "data": "data_1",
+                        "field": "y"
+                    },
+                    {
+                        "data": "data_2",
+                        "field": "y"
+                    }
+                ]
             },
             "range": [
                 {
