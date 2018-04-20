@@ -267,6 +267,15 @@
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
         "strokeDash": {
           "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
           "items": {
@@ -845,6 +854,15 @@
         },
         "stroke": {
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -3927,6 +3945,15 @@
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
         "strokeDash": {
           "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
           "items": {
@@ -4336,6 +4363,15 @@
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
         "strokeDash": {
           "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
           "items": {
@@ -4555,6 +4591,15 @@
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
         "strokeDash": {
           "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
           "items": {
@@ -4765,6 +4810,15 @@
         },
         "stroke": {
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -6328,6 +6382,15 @@
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
         "strokeDash": {
           "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
           "items": {
@@ -6513,6 +6576,15 @@
         },
         "stroke": {
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -7823,6 +7895,15 @@
         },
         "stroke": {
           "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
