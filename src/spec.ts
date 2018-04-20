@@ -546,7 +546,15 @@ function normalizePathOverlay(spec: NormalizedUnitSpec, config: Config = {}): No
   // _ is used to denote a dropped property of the unit spec
   // which should not be carried over to the layer spec
   const {selection, projection, encoding, mark, ...outerSpec} = spec;
-  const markDef: MarkDef = isMarkDef(mark) ? mark: {type: mark};
+  const markType = isMarkDef(mark) ? mark.type : mark;
+
+  const markDef: MarkDef = {
+    type: markType,
+    // make area mark translucent by default
+    // TODO: extract this 0.7 to be shared with default opacity for point/tick/...
+    ...(markType === 'area' ? {opacity: 0.7} : {}),
+    ...(isMarkDef(mark) ? mark : {})
+  };
 
   const pointOverlay = getPointOverlay(markDef, config[markDef.type], encoding);
   const lineOverlay = markDef.type === 'area' && getLineOverlay(markDef, config[markDef.type]);
@@ -557,7 +565,7 @@ function normalizePathOverlay(spec: NormalizedUnitSpec, config: Config = {}): No
 
   const layer: NormalizedUnitSpec[] = [{
     // Do not include point / line overlay in the normalize spec
-    mark: isMarkDef(mark) ? dropLineAndPoint(mark) : mark,
+    mark: dropLineAndPoint(markDef),
     encoding
   }];
 
