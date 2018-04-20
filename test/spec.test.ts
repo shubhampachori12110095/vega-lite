@@ -428,7 +428,7 @@ describe('normalize()', function () {
             }
           },
           {
-            "mark": {"type": "point", "filled": true},
+            "mark": {"type": "point", "opacity": 1, "filled": true},
             "encoding": {
               "x": {"field": "date", "type": "temporal"},
               "y": {"field": "price", "type": "quantitative"}
@@ -461,7 +461,7 @@ describe('normalize()', function () {
             }
           },
           {
-            "mark": {"type": "point", "filled": true, "color": "red"},
+            "mark": {"type": "point", "opacity": 1, "filled": true, "color": "red"},
             "encoding": {
               "x": {"field": "date", "type": "temporal"},
               "y": {"field": "price", "type": "quantitative"}
@@ -498,7 +498,7 @@ describe('normalize()', function () {
               }
             },
             {
-              "mark": {"type": "point", "filled": true},
+              "mark": {"type": "point", "opacity": 1, "filled": true},
               "encoding": {
                 "x": {"field": "date", "type": "temporal"},
                 "y": {"field": "price", "type": "quantitative"}
@@ -539,7 +539,7 @@ describe('normalize()', function () {
             }
           },
           {
-            "mark": {"type": "point", "filled": true},
+            "mark": {"type": "point", "opacity": 1, "filled": true},
             "encoding": {
               "x": {"field": "date","type": "temporal"},
               "y": {"field": "price","type": "quantitative"}
