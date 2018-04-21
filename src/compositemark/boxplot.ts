@@ -10,7 +10,7 @@ import {Field, FieldDef, isContinuous, isFieldDef, PositionFieldDef, vgField} fr
 import * as log from './../log';
 import {GenericUnitSpec, NormalizedLayerSpec, NormalizedUnitSpec} from './../spec';
 import {Orient} from './../vega.schema';
-import {getMarkDefMixins} from './common';
+import {partLayerMixins} from './common';
 
 export const BOXPLOT: 'boxplot' = 'boxplot';
 export type BoxPlot = typeof BOXPLOT;
@@ -94,64 +94,74 @@ export function normalizeBoxPlot(spec: GenericUnitSpec<Encoding<string>, BoxPlot
   const {scale, axis} = continuousAxisChannelDef;
 
   const boxLayer: NormalizedUnitSpec[] = [
-    { // lower whisker
-      mark: {
-        type: 'rule',
-        ...getMarkDefMixins<BoxPlotPartsMixins>(markDef, 'whisker', config.boxplot)
-      },
-      encoding: {
-        [continuousAxis]: {
-          field: 'lower_whisker_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type,
-          ...(scale ? {scale} : {}),
-          ...(axis ? {axis} : {})
-        },
-        [continuousAxis + '2']: {
-          field: 'lower_box_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type
-        },
-        ...encodingWithoutSizeColorAndContinuousAxis
+    // lower whisker
+    ...partLayerMixins<BoxPlotPartsMixins>(
+      markDef, 'whisker', config.boxplot,
+      {
+        mark: 'rule',
+        encoding: {
+          [continuousAxis]: {
+            field: 'lower_whisker_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type,
+            ...(scale ? {scale} : {}),
+            ...(axis ? {axis} : {})
+          },
+          [continuousAxis + '2']: {
+            field: 'lower_box_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type
+          },
+          ...encodingWithoutSizeColorAndContinuousAxis
+        }
       }
-    }, { // upper whisker
-      mark: {
-        type: 'rule',
-        ...getMarkDefMixins<BoxPlotPartsMixins>(markDef, 'whisker', config.boxplot)
-      },
-      encoding: {
-        [continuousAxis]: {
-          field: 'upper_box_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type
-        },
-        [continuousAxis + '2']: {
-          field: 'upper_whisker_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type
-        },
-        ...encodingWithoutSizeColorAndContinuousAxis
+    ),
+    // upper whisker
+    ...partLayerMixins<BoxPlotPartsMixins>(
+      markDef, 'whisker', config.boxplot,
+      {
+        mark: 'rule',
+        encoding: {
+          [continuousAxis]: {
+            field: 'upper_box_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type
+          },
+          [continuousAxis + '2']: {
+            field: 'upper_whisker_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type
+          },
+          ...encodingWithoutSizeColorAndContinuousAxis
+        }
       }
-    }, { // box (q1 to q3)
-      ...(selection ? {selection} : {}),
-      mark: {
-        type: 'bar',
-        ...(sizeValue ? {size: sizeValue} : {}),
-        ...getMarkDefMixins<BoxPlotPartsMixins>(markDef, 'box', config.boxplot)
-      },
-      encoding: {
-        [continuousAxis]: {
-          field: 'lower_box_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type
+    ),
+    // box (q1 to q3)
+    ...partLayerMixins<BoxPlotPartsMixins>(
+      markDef, 'box', config.boxplot,
+      {
+        ...(selection ? {selection} : {}),
+        mark: {
+          type: 'bar',
+          ...(sizeValue ? {size: sizeValue} : {})
         },
-        [continuousAxis + '2']: {
-          field: 'upper_box_' + continuousAxisChannelDef.field,
-          type: continuousAxisChannelDef.type
-        },
-        ...encodingWithoutContinuousAxis,
-        ...(size ? {size} : {})
+        encoding: {
+          [continuousAxis]: {
+            field: 'lower_box_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type
+          },
+          [continuousAxis + '2']: {
+            field: 'upper_box_' + continuousAxisChannelDef.field,
+            type: continuousAxisChannelDef.type
+          },
+          ...encodingWithoutContinuousAxis,
+          ...(size ? {size} : {})
+        }
       }
-    }, { // median tick
-      mark: {
+    ),
+    // median tick
+    ...partLayerMixins<BoxPlotPartsMixins>(
+      markDef, 'median', config.boxplot,
+      {
+        mark: {
         type: 'tick',
-        ...(sizeValue ? {size: sizeValue} : {}),
-        ...getMarkDefMixins<BoxPlotPartsMixins>(markDef, 'median', config.boxplot)
+        ...(sizeValue ? {size: sizeValue} : {})
       },
       encoding: {
         [continuousAxis]: {
@@ -161,7 +171,7 @@ export function normalizeBoxPlot(spec: GenericUnitSpec<Encoding<string>, BoxPlot
         ...encodingWithoutSizeColorAndContinuousAxis,
         ...(size ? {size} : {})
       }
-    }
+    })
   ];
 
   if (isMinMax) {
@@ -186,28 +196,29 @@ export function normalizeBoxPlot(spec: GenericUnitSpec<Encoding<string>, BoxPlot
       { // boxplot
         transform,
         layer: boxLayer
-      }, {
-        transform: [
-          {
-            window: boxParamsQuartiles(continuousAxisChannelDef.field),
-            frame: [null, null],
-            groupby
-          }, {
-            filter: `(${fieldExpr} < ${lowerWhiskerExpr}) || (${fieldExpr} > ${upperWhiskerExpr})`
+      },
+      ...partLayerMixins<BoxPlotPartsMixins>(
+        markDef, 'outliers', config.boxplot,
+        {
+          transform: [
+            {
+              window: boxParamsQuartiles(continuousAxisChannelDef.field),
+              frame: [null, null],
+              groupby
+            }, {
+              filter: `(${fieldExpr} < ${lowerWhiskerExpr}) || (${fieldExpr} > ${upperWhiskerExpr})`
+            }
+          ],
+          mark: 'point',
+          encoding: {
+            [continuousAxis]: {
+              field: continuousAxisChannelDef.field,
+              type: continuousAxisChannelDef.type
+            },
+            ...encodingWithoutSizeColorAndContinuousAxis
           }
-        ],
-        mark: {
-          type: 'point',
-          ...getMarkDefMixins<BoxPlotPartsMixins>(markDef, 'outliers', config.boxplot)
-        },
-        encoding: {
-          [continuousAxis]: {
-            field: continuousAxisChannelDef.field,
-            type: continuousAxisChannelDef.type
-          },
-          ...encodingWithoutSizeColorAndContinuousAxis
         }
-      }
+      )
     ]
   };
 }
